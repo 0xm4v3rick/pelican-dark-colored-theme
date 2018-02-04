@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+    {% if articles %}
+        {% for article in articles_page.object_list %}
+            <div class="article-index">
+                <div class="grid grid-pad">
+                    <div class="col-8-12">
+                        <h3><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></h3>
+                        <small>Published on {{ article.date.strftime('%d/%m/%Y') }}</small>
+                        <small> | by <a href="../{{ article.author }}.html">{{ article.author }}</a></small>
+
+                        <small> | tags : </small>
+			{% for tag in article.tags %}
+                            {% if loop.last %}
+                                <span class="tag"><a href="{{ SITEURL}}/{{ tag.url }}">{{ tag }}</a></span>
+                            {% else %}
+                                <span class="tag"><a href="{{ SITEURL}}/{{ tag.url }}">{{ tag }}</a>,</span>
+                            {% endif %}
+                        {% endfor %}
+			<div class="entry-content"> {{ article.summary }} </div>
+                    </div>
+                    <div class="col-4-12">
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+{% include 'pagination.html' %}
+    {% endif %}
+
+{% endblock %}
